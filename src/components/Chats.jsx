@@ -1,32 +1,29 @@
 import React from "react";
-
+import Pict from "../img/724.jpg"
 const Chats = () => {
     return (
         <div className="chats">
             <div className="userChat">
-                <img src="https://hips.hearstapps.com/ell.h-cdn.co/assets/17/16/1492974002-elle-margot-robbie.jpg?crop=0.983xw:0.983xh;0,0&resize=1200:*" alt="" />
-
+                <img src={Pict} alt="" />
 
                 <div className="userChatInfo">
-                    <span>sraka</span>
+                    <span>Alesya</span>
                     <p>Hello last message</p>
                 </div>
             </div>
             <div className="userChat">
-                <img src="https://hips.hearstapps.com/ell.h-cdn.co/assets/17/16/1492974002-elle-margot-robbie.jpg?crop=0.983xw:0.983xh;0,0&resize=1200:*" alt="" />
-
+                <img src={Pict} alt="" />
 
                 <div className="userChatInfo">
-                    <span>sraka</span>
+                    <span>Alesya</span>
                     <p>Hello last message</p>
                 </div>
             </div>
             <div className="userChat">
-                <img src="https://hips.hearstapps.com/ell.h-cdn.co/assets/17/16/1492974002-elle-margot-robbie.jpg?crop=0.983xw:0.983xh;0,0&resize=1200:*" alt="" />
-
+                <img src={Pict} alt="" />
 
                 <div className="userChatInfo">
-                    <span>sraka</span>
+                    <span>Alesya</span>
                     <p>Hello last message</p>
                 </div>
             </div>
