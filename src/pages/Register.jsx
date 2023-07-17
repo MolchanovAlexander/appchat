@@ -4,9 +4,11 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db, querySnapshot, storage } from "../firebase.js"
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc, collection, getDocs } from "firebase/firestore";
+import { useNavigate, Link } from "react-router-dom";
 
 const Register = () => {
     const [error, setError] = useState(false)
+    const navigate = useNavigate()
     const handleSubmit = async (e) => {
 
         e.preventDefault();
@@ -19,7 +21,7 @@ const Register = () => {
             console.log(storage);
             const storageRef = ref(storage, displayName);
 
-            const uploadTask = uploadBytesResumable(storageRef, file);
+            const uploadTask = await uploadBytesResumable(storageRef, file);
 
             // Register three observers:
             // 1. 'state_changed' observer, called any time the state changes
@@ -51,6 +53,7 @@ const Register = () => {
                             photoURL: downloadURL
                         })
                         await setDoc(doc(db, 'usersChat', res.user.uid), {})
+                        navigate('/')
                     });
 
                 }
@@ -76,7 +79,7 @@ const Register = () => {
                 <button>Sign Up</button>
                 {error && <span style={{ color: "red" }}>Something wrong</span>}
             </form>
-            <p>Do you have an account? Login</p>
+            <p>Do you have an account? <Link to="/login">Login</Link></p>
         </div>
 
     </div>
