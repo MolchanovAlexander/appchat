@@ -1,88 +1,168 @@
 import React, { useState } from "react";
-import Add from "../img/pngwing.com.png"
+import Add from "../img/addAvatar.png";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth, db, querySnapshot, storage } from "../firebase.js"
+import { auth, db, storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { doc, setDoc, collection, getDocs } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
 
 const Register = () => {
-    const [error, setError] = useState(false)
-    const navigate = useNavigate()
-    const handleSubmit = async (e) => {
+  const [err, setErr] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-        e.preventDefault();
-        const displayName = e.target[0].value;
-        const email = e.target[1].value;
-        const password = e.target[2].value;
-        const file = e.target[3].files[0];
-        try {
-            const res = await createUserWithEmailAndPassword(auth, email, password)
-            console.log(storage);
-            const storageRef = ref(storage, displayName);
+  const handleSubmit = async (e) => {
+    setLoading(true);
+    e.preventDefault();
+    const displayName = e.target[0].value;
+    const email = e.target[1].value;
+    const password = e.target[2].value;
+    const file = e.target[3].files[0];
 
-            const uploadTask = await uploadBytesResumable(storageRef, file);
+    try {
+      //Create user
+      const res = await createUserWithEmailAndPassword(auth, email, password);
 
-            // Register three observers:
-            // 1. 'state_changed' observer, called any time the state changes
-            // 2. Error observer, called on failure
-            // 3. Completion observer, called on successful completion
-            uploadTask.on(
-                (error) => {
-                    setError(true)
-                },
-                () => {
-                    // Handle successful uploads on complete
-                    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-                    getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-                        await updateProfile(res.user, {
-                            displayName,
-                            photoURL: downloadURL,
+      //Create a unique image name
+      const date = new Date().getTime();
+      const storageRef = ref(storage, `${displayName + date}`);
 
-                        })
-                        // console.log(1);
-                        // const querySnapshot = await getDocs(collection(db, "/users"));
-                        // querySnapshot.forEach((doc) => {
-                        //     console.log(`${doc.id} => ${doc.data().displayName}`);
-                        // });
-                        
-                        await setDoc(doc(db, 'users', res.user.uid), {
-                            uid: res.user.uid,
-                            displayName,
-                            email,
-                            photoURL: downloadURL
-                        })
-                        await setDoc(doc(db, 'usersChat', res.user.uid), {})
-                        navigate('/')
-                    });
+      await uploadBytesResumable(storageRef, file).then(() => {
+        getDownloadURL(storageRef).then(async (downloadURL) => {
+          try {
+            //Update profile
+            await updateProfile(res.user, {
+              displayName,
+              photoURL: downloadURL,
+            });
+            //create user on firestore
+            await setDoc(doc(db, "users", res.user.uid), {
+              uid: res.user.uid,
+              displayName,
+              email,
+              photoURL: downloadURL,
+            });
 
-                }
-            );
-
-        } catch (error) {
-            setError(true)
-            // ..
-        };
+            //create empty user chats on firestore
+            await setDoc(doc(db, "userChats", res.user.uid), {});
+            navigate("/");
+          } catch (err) {
+            console.log(err);
+            setErr(true);
+            setLoading(false);
+          }
+        });
+      });
+    } catch (err) {
+      setErr(true);
+      setLoading(false);
     }
-    return <div className="formContainer">
-        <div className="formWrapper">
-            <span className="logo">GufRIP Chat</span>
-            <span className="title">Register</span>
-            <form onSubmit={handleSubmit}>
-                <input type="text" placeholder="display name" />
-                <input type="email" placeholder="email" />
-                <input type="password" placeholder="password" />
-                <input style={{ display: 'none' }} type="file" id="file" />
-                <label htmlFor="file"><img src={Add} alt="" />
-                    <span>Add your avatar</span>
-                </label>
-                <button>Sign Up</button>
-                {error && <span style={{ color: "red" }}>Something wrong</span>}
-            </form>
-            <p>Do you have an account? <Link to="/login">Login</Link></p>
-        </div>
+  };
 
+  return (
+    <div className="formContainer">
+      <div className="formWrapper">
+        <span className="logo">Lama Chat</span>
+        <span className="title">Register</span>
+        <form onSubmit={handleSubmit}>
+          <input required type="text" placeholder="display name" />
+          <input required type="email" placeholder="email" />
+          <input required type="password" placeholder="password" />
+          <input required style={{ display: "none" }} type="file" id="file" />
+          <label htmlFor="file">
+            <img src={Add} alt="" />
+            <span>Add an avatar</span>
+          </label>
+          <button disabled={loading}>Sign up</button>
+          {loading && "Uploading please wait..."}
+          {err && <span>Something went wrong</span>}
+        </form>
+        <p>
+          You do have an account? <Link to="/register">Login</Link>
+        </p>
+      </div>
     </div>
-}
+  );
+};
 
-export default Register
+export default Register;
+// import React, { useState } from "react";
+// import Add from "../img/c"
+// import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+// import { auth, db, storage } from "../firebase.js"
+// import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+// import { doc, setDoc } from "firebase/firestore";
+// import { useNavigate, Link } from "react-router-dom";
+
+// const Register = () => {
+//     const [error, setError] = useState(false)
+//     const navigate = useNavigate()
+
+//     const handleSubmit = async (e) => {
+
+//         e.preventDefault();
+//         const displayName = e.target[0].value;
+//         const email = e.target[1].value;
+//         const password = e.target[2].value;
+//         const file = e.target[3].files[0];
+
+//         try {
+//             const res = await createUserWithEmailAndPassword(auth, email, password)
+
+//             const storageRef = ref(storage, displayName);
+
+//             const uploadTask = await uploadBytesResumable(storageRef, file)
+//             console.log(res.user.displayName, "<>", res.user.uid);
+//             console.log(uploadTask);
+//             uploadTask.on(
+//                 (error) => {
+//                     setError(true)
+//                 },
+//                 () => {
+//                     getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+//                         await updateProfile(res.user, {
+//                             displayName,
+//                             photoURL: downloadURL,
+
+//                         });
+//                         await setDoc(doc(db, "users", res.user.uid), {
+//                             uid: res.user.uid,
+//                             displayName,
+//                             email,
+//                             photoURL: downloadURL
+//                         });
+//                         await setDoc(doc(db, "usersChats", res.user.uid), {});
+//                         navigate('/')
+//                     });
+
+//                 }
+//             )
+
+//         } catch (error) {
+//             setError(true)
+//             console.log(error);
+//             // ..
+//         };
+//     }
+//     return <div className="formContainer">
+//         <div className="formWrapper">
+//             <span className="logo">GufRIP Chat</span>
+//             <span className="title">Register</span>
+//             <form onSubmit={handleSubmit}>
+//                 <input type="text" placeholder="display name" />
+//                 <input type="email" placeholder="email" />
+//                 <input type="password" placeholder="password" />
+//                 <input style={{ display: 'none' }} type="file" id="file" />
+//                 <label htmlFor="file"><img src={Add} alt="" />
+//                     <span>Add your avatar</span>
+//                 </label>
+//                 <button>Sign Up</button>
+//                 {error && <span style={{ color: "red" }}>{error}</span>}
+//             </form>
+//             <p>Do you have an account? <Link to="/login">Login</Link></p>
+//         </div>
+
+//     </div>
+// }
+
+// export default Register
