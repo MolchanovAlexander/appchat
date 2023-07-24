@@ -38,6 +38,7 @@ const Search = () => {
 
   const handleKey = (e) => {
     e.code === "Enter" && handleSearch();
+    
   };
 
   const handleSelect = async () => {
@@ -87,11 +88,12 @@ const Search = () => {
           onChange={(e) => setUsername(e.target.value)}
           value={username}
         />
+        <button onClick={handleSearch}>{">"}</button>
       </div>
       {err && <span>User not found!</span>}
       {user && (
         <div className="userChat" onClick={handleSelect}>
-          <img src={user.photoURL} alt="" />
+          <img src={user.photoURL} alt="" /><button onClick={()=>setUser(null)}>X</button>
           <div className="userChatInfo">
             <span>{user.displayName}</span>
           </div>

@@ -104,13 +104,16 @@ $darkColor : #2f2d52;
         display: flex;
         overflow: hidden;
         @include tablet{
-            width: 90%;
+            width: 100%;
         }
 
         .sidebar {
             flex: 1;
             background-color: rgb(102, 29, 102);
             position: relative;
+            @include mobile{
+                width: 20%;
+            }
             .navbar {
                 display: flex;
                 background-color: rgb(48, 8, 48);
@@ -155,10 +158,13 @@ $darkColor : #2f2d52;
 
             .search {
                 border-bottom: 1px solid gray;
-
+                
                 .searchForm {
                     padding: 10px;
-
+                    display: flex;
+                    @include mobile{
+                        flex-direction: column;
+                     }
                     input {
                         border: none;
                         background-color: transparent;
@@ -183,8 +189,11 @@ $darkColor : #2f2d52;
                 &:hover {
                     background-color: #2f2d52;
                 }
-
+                @include mobile{
+                    flex-direction: column;
+                 }
                 img {
+                    min-width : 50px;
                     width: 50px;
                     height: 50px;
                     border-radius: 50%;
@@ -193,15 +202,26 @@ $darkColor : #2f2d52;
                 }
 
                 .userChatInfo {
+                    display: flex;
+                    
+                    align-items: center;
+                    @include mobile{
+                        flex-direction: column;
+                     }
                     span {
+                       
                         font-size: 18px;
                         font-weight: bold;
+                        overflow: hidden;
                     }
 
                     p {
+                       
                         font-size: 14px;
                         color: lightgray;
+                        margin: -1px;
                     }
+                   
                 }
 
             }
@@ -210,7 +230,10 @@ $darkColor : #2f2d52;
         .chat {
             flex: 2;
             border-radius: 10px;
-
+            @include mobile{
+                flex-grow: 3;
+                z-index: 1;
+            }
             .chatInfo {
                 border: 1px solid black;
                 height: 50px;
