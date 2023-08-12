@@ -6,6 +6,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
 
+
 const Register = () => {
   const [err, setErr] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -18,41 +19,67 @@ const Register = () => {
     const email = e.target[1].value;
     const password = e.target[2].value;
     const file = e.target[3].files[0];
+    const defaultPhotoUrl = "https://firebasestorage.googleapis.com/v0/b/minichat-85485.appspot.com/o/images.jpeg?alt=media&token=62d28a35-fe3f-47a2-ac71-8d29a1b9177a";
 
     try {
       //Create user
       const res = await createUserWithEmailAndPassword(auth, email, password);
 
-      //Create a unique image name
+      //Create a unique image name https://firebasestorage.googleapis.com/v0/b/minichat-85485.appspot.com/o/images.jpeg?alt=media&token=62d28a35-fe3f-47a2-ac71-8d29a1b9177a
       const date = new Date().getTime();
       const storageRef = ref(storage, `${displayName + date}`);
+      if (file) {
+        await uploadBytesResumable(storageRef, file).then(() => {
+          getDownloadURL(storageRef).then(async (downloadURL) => {
+            try {
+              //Update profile
+              await updateProfile(res.user, {
+                displayName,
+                photoURL: downloadURL,
+              });
+              //create user on firestore
+              await setDoc(doc(db, "users", res.user.uid), {
+                uid: res.user.uid,
+                displayName,
+                email,
+                photoURL: downloadURL,
+              });
 
-      await uploadBytesResumable(storageRef, file).then(() => {
-        getDownloadURL(storageRef).then(async (downloadURL) => {
-          try {
-            //Update profile
-            await updateProfile(res.user, {
-              displayName,
-              photoURL: downloadURL,
-            });
-            //create user on firestore
-            await setDoc(doc(db, "users", res.user.uid), {
-              uid: res.user.uid,
-              displayName,
-              email,
-              photoURL: downloadURL,
-            });
-
-            //create empty user chats on firestore
-            await setDoc(doc(db, "userChats", res.user.uid), {});
-            navigate("/");
-          } catch (err) {
-            console.log(err);
-            setErr(true);
-            setLoading(false);
-          }
+              //create empty user chats on firestore
+              await setDoc(doc(db, "userChats", res.user.uid), {});
+              navigate("/");
+            } catch (err) {
+              console.log(err);
+              setErr(true);
+              setLoading(false);
+            }
+          });
         });
-      });
+      } else {
+        try {
+          //Update profile
+          await updateProfile(res.user, {
+            displayName,
+            photoURL: defaultPhotoUrl,
+          });
+          //create user on firestore
+          await setDoc(doc(db, "users", res.user.uid), {
+            uid: res.user.uid,
+            displayName,
+            email,
+            photoURL: defaultPhotoUrl,
+          });
+
+          //create empty user chats on firestore
+          await setDoc(doc(db, "userChats", res.user.uid), {});
+          navigate("/");
+        } catch (err) {
+          console.log(err);
+          setErr(true);
+          setLoading(false);
+        }
+      }
+
     } catch (err) {
       setErr(true);
       setLoading(false);
@@ -68,7 +95,7 @@ const Register = () => {
           <input required type="text" placeholder="display name" />
           <input required type="email" placeholder="email" />
           <input required type="password" placeholder="password" />
-          <input required style={{ display: "none" }} type="file" id="file" />
+          <input style={{ display: "none" }} type="file" id="file" />
           <label htmlFor="file">
             <img src={Add} alt="" />
             <span>Add an avatar</span>

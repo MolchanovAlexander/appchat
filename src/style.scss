@@ -114,6 +114,7 @@ $darkColor : #2f2d52;
             flex: 1;
             background-color: rgb(102, 29, 102);
             position: relative;
+            overflow: hidden;
 
             @include mobile {
                 width: 20%;
@@ -187,57 +188,71 @@ $darkColor : #2f2d52;
                 }
             }
 
-            .userChat {
-                padding: 10px;
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                color: white;
-                cursor: pointer;
+            .chats {
+                position: absolute;
+                overflow-y: scroll;
 
-                &:hover {
-                    background-color: #2f2d52;
-                }
-
-                @include mobile {
-                    flex-direction: column;
-                }
-
-                img {
-                    min-width: 50px;
-                    width: 50px;
-                    height: 50px;
-                    border-radius: 50%;
-                    object-fit: cover;
-
-                }
-
-                .userChatInfo {
+                .userChat {
+                    padding: 10px;
                     display: flex;
-                    flex-direction: column;
-                    align-items: flex-start;
+                    align-items: center;
+                    gap: 10px;
+                    color: white;
+                    cursor: pointer;
+
+                    &:hover {
+                        background-color: #2f2d52;
+                    }
 
                     @include mobile {
-                        align-items: center;
+                        flex-direction: column;
                     }
 
-                    span {
+                    img {
+                        min-width: 50px;
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        object-fit: cover;
 
-                        font-size: 18px;
-                        font-weight: bold;
-                        overflow: hidden;
                     }
 
-                    p {
+                    .userChatInfo {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-start;
 
-                        font-size: 14px;
-                        color: lightgray;
-                        margin: -1px;
+                        @include mobile {
+                            align-items: center;
+                        }
+
+                        span {
+
+                            font-size: 18px;
+                            font-weight: bold;
+                            overflow: hidden;
+                        }
+
+                        p {
+
+                            font-size: 14px;
+                            color: lightgray;
+                            margin: -1px;
+                        }
+
                     }
 
                 }
-
+            }::-webkit-scrollbar{
+                width: 5px;
             }
+            ::-webkit-scrollbar-track{
+                background-color: #a11f1f;
+            }
+            ::-webkit-scrollbar-thumb{
+                background-color: #3847d1;
+            }
+
         }
 
         .chat {
@@ -271,6 +286,7 @@ $darkColor : #2f2d52;
                 }
             }
 
+            // message --------------
             .messages {
                 background-color: #ddddf7;
                 padding: 10px;
@@ -311,10 +327,6 @@ $darkColor : #2f2d52;
                             padding: 0;
                         }
 
-
-
-
-
                         img {
                             width: 100%;
                             border-radius: 10px;
@@ -324,6 +336,7 @@ $darkColor : #2f2d52;
                     &.owner {
                         flex-direction: row-reverse;
                         align-items: flex-start;
+
                         .messageContent {
                             align-items: flex-end;
                             background-color: #8b1ad6;
@@ -337,6 +350,7 @@ $darkColor : #2f2d52;
                 }
             }
 
+            // inputtt --------------
             .inputPannel {
                 height: 50px;
                 background-color: #fff;
