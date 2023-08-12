@@ -9,9 +9,11 @@ import {
   updateDoc,
   serverTimestamp,
   getDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { AuthContext } from "../context/AuthContext";
+import { json } from "react-router-dom";
 
 const Search = () => {
   const [username, setUsername] = useState("");
@@ -38,7 +40,7 @@ const Search = () => {
 
   const handleKey = (e) => {
     e.code === "Enter" && handleSearch();
-    
+
   };
 
   const handleSelect = async () => {
@@ -73,7 +75,29 @@ const Search = () => {
           [combinedId + ".date"]: serverTimestamp(),
         });
       }
-    } catch (err) {}
+    } catch (err) { }
+
+    setUser(null);
+    setUsername("")
+  };
+  const handleDelete = async () => {
+    //check whether the group(chats in firestore) exists
+    const combinedId =
+      currentUser.uid > user.uid
+        ? currentUser.uid + user.uid
+        : user.uid + currentUser.uid;
+    try {
+      const res = await getDoc(doc(db, "chats", combinedId));
+
+      if (res.exists()) {
+
+        //delete a chat in chats collection
+        await deleteDoc(doc(db, "chats", combinedId)).then(console.log("del"));
+
+      }
+    } catch (err) {
+      console.log(json(err));
+    }
 
     setUser(null);
     setUsername("")
@@ -93,9 +117,10 @@ const Search = () => {
       {err && <span>User not found!</span>}
       {user && (
         <div className="userChat" onClick={handleSelect}>
-          <img src={user.photoURL} alt="" /><button onClick={()=>setUser(null)}>X</button>
+          <img src={user.photoURL} alt="" />
           <div className="userChatInfo">
             <span>{user.displayName}</span>
+            <button className="userChatInfoDelete" onClick={handleDelete}>del</button>
           </div>
         </div>
       )}
