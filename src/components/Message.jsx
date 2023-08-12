@@ -1,15 +1,19 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
+import * as dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+dayjs.extend(relativeTime)
+
 
 const Message = ({ message }) => {
-    console.log(message);
-
+    
     const { currentUser } = useContext(AuthContext)
     const { data } = useContext(ChatContext)
 
     const ref = useRef()
 
+    
     useEffect(()=>{
         ref.current?.scrollIntoView({behavior:"smooth"})
     },[message])
@@ -22,11 +26,12 @@ const Message = ({ message }) => {
                         ? currentUser.photoURL
                         : data.user.photoURL}
                     alt="" />
-                <span>{message.date.seconds}</span>
+                <span>{dayjs.unix(message.date.seconds).from(dayjs()) }</span>
             </div>
             <div className="messageContent">
-                <p>{message.text}</p>
+                
                 {message.img && <img src={message.img} alt="" />}
+                <p>{message.text}</p>
             </div>
         </div>
     )

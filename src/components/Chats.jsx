@@ -21,15 +21,12 @@ const Chats = () => {
         currentUser.uid && getChats()
     }, [currentUser.uid])
    
-
-    console.log(Object.entries(chats));
-
     // var u = Object.entries(chats)[1].userInfo
 
     const handleSelect = (u)=> {
        
         dispatch({type: "CHANGE_USER", payload: u})
-        console.log(u.uid);
+        
     }
 
     return (

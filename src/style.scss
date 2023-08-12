@@ -15,6 +15,7 @@
         @content
     }
 }
+
 $darkColor : #2f2d52;
 
 .formContainer {
@@ -37,7 +38,7 @@ $darkColor : #2f2d52;
             color: #5d5b8d;
             font-weight: bold;
             font-size: 24px;
-           
+
         }
 
         .title {
@@ -88,6 +89,7 @@ $darkColor : #2f2d52;
         }
     }
 }
+
 /* HOME -----------------------------------------------------44444444444444444444444-----*/
 .home {
     background-color: #89a0d3;
@@ -103,7 +105,8 @@ $darkColor : #2f2d52;
         height: 80%;
         display: flex;
         overflow: hidden;
-        @include tablet{
+
+        @include tablet {
             width: 100%;
         }
 
@@ -111,9 +114,11 @@ $darkColor : #2f2d52;
             flex: 1;
             background-color: rgb(102, 29, 102);
             position: relative;
-            @include mobile{
+
+            @include mobile {
                 width: 20%;
             }
+
             .navbar {
                 display: flex;
                 background-color: rgb(48, 8, 48);
@@ -123,7 +128,8 @@ $darkColor : #2f2d52;
 
                 .logo {
                     font-weight: bold;
-                    @include tablet{
+
+                    @include tablet {
                         display: none;
                     }
                 }
@@ -146,7 +152,8 @@ $darkColor : #2f2d52;
                         cursor: pointer;
                         border: none;
                         font-size: 10px;
-                        @include tablet{
+
+                        @include tablet {
                             position: absolute;
                             bottom: 10px;
                         }
@@ -158,13 +165,15 @@ $darkColor : #2f2d52;
 
             .search {
                 border-bottom: 1px solid gray;
-                
+
                 .searchForm {
                     padding: 10px;
                     display: flex;
-                    @include mobile{
+
+                    @include mobile {
                         flex-direction: column;
-                     }
+                    }
+
                     input {
                         border: none;
                         background-color: transparent;
@@ -189,11 +198,13 @@ $darkColor : #2f2d52;
                 &:hover {
                     background-color: #2f2d52;
                 }
-                @include mobile{
+
+                @include mobile {
                     flex-direction: column;
-                 }
+                }
+
                 img {
-                    min-width : 50px;
+                    min-width: 50px;
                     width: 50px;
                     height: 50px;
                     border-radius: 50%;
@@ -205,23 +216,25 @@ $darkColor : #2f2d52;
                     display: flex;
                     flex-direction: column;
                     align-items: flex-start;
-                    @include mobile{
+
+                    @include mobile {
                         align-items: center;
-                     }
+                    }
+
                     span {
-                       
+
                         font-size: 18px;
                         font-weight: bold;
                         overflow: hidden;
                     }
 
                     p {
-                       
+
                         font-size: 14px;
                         color: lightgray;
                         margin: -1px;
                     }
-                   
+
                 }
 
             }
@@ -230,10 +243,12 @@ $darkColor : #2f2d52;
         .chat {
             flex: 2;
             border-radius: 10px;
-            @include mobile{
+
+            @include mobile {
                 flex-grow: 3;
                 z-index: 1;
             }
+
             .chatInfo {
                 border: 1px solid black;
                 height: 50px;
@@ -287,30 +302,36 @@ $darkColor : #2f2d52;
                         display: flex;
                         flex-direction: column;
                         gap: 10px;
+                        background-color: #fff;
+                        padding: 10px;
+                        border-radius: 0px 20px 20px 20px;
 
-                        p {
-                            background-color: #fff;
-                            padding: 10px 20px;
-                            border-radius: 0px 10px 10px 10px;
-                            max-width: max-content;
+                        >p {
+                            margin: 0;
+                            padding: 0;
                         }
 
+
+
+
+
                         img {
-                            width: 50%;
+                            width: 100%;
+                            border-radius: 10px;
                         }
                     }
 
                     &.owner {
                         flex-direction: row-reverse;
-
+                        align-items: flex-start;
                         .messageContent {
                             align-items: flex-end;
+                            background-color: #8b1ad6;
 
-                            p {
-                                background-color: #8b1ad6;
-                                color: #fff;
-                                border-radius: 10px 0px 10px 10px;
-                            }
+
+                            color: #fff;
+                            border-radius: 20px 0px 20px 20px;
+
                         }
                     }
                 }

@@ -17,6 +17,8 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 const InputPannel = () => {
   const [text, setText] = useState("");
   const [img, setImg] = useState(null);
+  const [progress, setProgress] = useState(0);
+  const isLoading = progress > 0;
 
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
@@ -27,12 +29,19 @@ const InputPannel = () => {
 
       const uploadTask = uploadBytesResumable(storageRef, img);
 
-      uploadTask.on('state_changed',
+      uploadTask.on(
+        'state changed',
+        (snapshot) => {
+          setProgress((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+          console.log('Upload progress', progress)
+        },
         (error) => {
           //TODO:Handle Error
+          console.log('Error upload')
         },
-        () => {
-           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+        async () => {
+          try {
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref)
             await updateDoc(doc(db, "chats", data.chatId), {
               messages: arrayUnion({
                 id: uuid(),
@@ -42,7 +51,10 @@ const InputPannel = () => {
                 img: downloadURL,
               }),
             });
-          });
+            setProgress(0)
+          } catch (err) {
+            console.log(err)
+          }
         }
       );
     } else {
@@ -73,6 +85,8 @@ const InputPannel = () => {
 
     setText("");
     setImg(null);
+    setProgress(0)
+    console.log({progress});
   };
   return (
     <div className="inputPannel">
@@ -93,7 +107,7 @@ const InputPannel = () => {
                  <label htmlFor="file">
                      <img src={Img} alt="" />
                 </label>
-        <button onClick={handleSend}>Send</button>
+        <button disabled={isLoading} onClick={handleSend}>{isLoading ? 'Loading' : 'Send'}</button>
       </div>
     </div>
   );
