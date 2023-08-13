@@ -23,7 +23,9 @@ const InputPannel = () => {
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
 
+  
   const handleSend = async () => {
+    if(text.length>1){
     if (img) {
       const storageRef = ref(storage, uuid());
 
@@ -87,6 +89,11 @@ const InputPannel = () => {
     setImg(null);
     setProgress(0)
     console.log({progress});
+  }
+  };
+  const handleKey = (e) => {
+    e.code === "Enter"  && handleSend();
+
   };
   return (
     <div className="inputPannel">
@@ -95,6 +102,7 @@ const InputPannel = () => {
         placeholder="Type something..."
         onChange={(e) => setText(e.target.value)}
         value={text}
+        onKeyDown={handleKey}
       />
      <div className="send">
                  <img src={Attach} alt="" />
@@ -103,11 +111,12 @@ const InputPannel = () => {
                     id="file"
                      style={{ display: "none" }}
                      onChange={(e) => setImg(e.target.files[0])}
+                      
                  />
                  <label htmlFor="file">
                      <img src={Img} alt="" />
                 </label>
-        <button disabled={isLoading} onClick={handleSend}>{isLoading ? 'Loading' : 'Send'}</button>
+        <button disabled={isLoading}  onClick={handleSend}>{isLoading ? 'Loading' : 'Send'}</button>
       </div>
     </div>
   );
