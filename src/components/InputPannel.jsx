@@ -22,7 +22,9 @@ const InputPannel = () => {
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
 
+  
   const handleSend = async () => {
+
     console.log(((text !== " ") && text.length > 0), text.length, img);
     if ((text !== " ") && (text.length > 0 || img !== null)) {
       if (img) {
@@ -92,6 +94,10 @@ const InputPannel = () => {
     }
 
   };
+  const handleKey = (e) => {
+    e.code === "Enter"  && handleSend();
+
+  };
   return (
     <div className="inputPannel">
       <input
@@ -99,7 +105,9 @@ const InputPannel = () => {
         placeholder="Type something..."
         onChange={(e) => setText(e.target.value)}
         value={text}
+        onKeyDown={handleKey}
       />
+
       <div className="send">
         {/* <img src={Attach} alt="" /> */}
         <input
