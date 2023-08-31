@@ -22,10 +22,10 @@ const InputPannel = () => {
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
 
-  
-  const handleSend = async () => {
 
-    console.log(((text !== " ") && text.length > 0), text.length, img);
+  const handleSend = async () => {
+    // works if img fille choosen or text more than 1 "space"
+
     if ((text !== " ") && (text.length > 0 || img !== null)) {
       if (img) {
         const storageRef = ref(storage, uuid());
@@ -95,7 +95,7 @@ const InputPannel = () => {
 
   };
   const handleKey = (e) => {
-    e.code === "Enter"  && handleSend();
+    e.code === "Enter" && handleSend();
 
   };
   return (
@@ -109,7 +109,7 @@ const InputPannel = () => {
       />
 
       <div className="send">
-        {/* <img src={Attach} alt="" /> */}
+        
         <input
           type="file"
           id="file"

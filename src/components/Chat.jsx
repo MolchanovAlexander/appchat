@@ -4,15 +4,22 @@ import InputPannel from "./InputPannel";
 import { ChatContext } from "../context/ChatContext";
 
 const Chat = () => {
-    const { data } = useContext(ChatContext)
-    
+    const { data, dispatch} = useContext(ChatContext)
+   
+    const handleClose = ()=> {
+       
+        dispatch({type: "CLOSE_USER"})
+        
+    }
     return (
         <div className="chat">
             <div className="chatInfo">
                 <span>{data.user?.displayName}</span>
                 <div className="chatIcons">
                     {data.chatId !== 'null' 
-                    ? <button className="chatInfoClose">close</button>
+                    ? <button 
+                    className="chatInfoClose"
+                    onClick={handleClose}>close</button>
                     : null }
                 </div>
             </div>

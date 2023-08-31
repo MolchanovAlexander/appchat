@@ -7,6 +7,7 @@ const Home = (props) => {
     return (
     <div className="home">
         <div className="container">
+            
             <Sidebar/>
             <Chat/>
         </div>

@@ -166,11 +166,23 @@ $darkColor : #2f2d52;
 
             .search {
                 border-bottom: 1px solid gray;
+                
+                .userChatImg {
+                    min-width: 50px;
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
 
                 .searchForm {
                     padding: 10px;
                     display: flex;
 
+                    .userChatImg {
+                        width: 50px;
+                    }
+                    
                     @include mobile {
                         flex-direction: column;
                     }
@@ -184,6 +196,19 @@ $darkColor : #2f2d52;
                         &::placeholder {
                             color: lightgreen;
                         }
+                    }
+                }
+                .userChat {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    .userChatInfoDelete {
+                        background-color: transparent;
+                        cursor: pointer;
+                    }
+                    .userChatInfoDelete:hover {
+                        background-color: #2f2d52;
+                        box-shadow: 0 0 4px white;
                     }
                 }
             }
@@ -201,6 +226,16 @@ $darkColor : #2f2d52;
                     color: white;
                     cursor: pointer;
 
+                    img {
+                        min-width: 50px;
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        cursor: pointer;
+
+                    }
+
                     &:hover {
                         background-color: #2f2d52;
                     }
@@ -209,14 +244,8 @@ $darkColor : #2f2d52;
                         flex-direction: column;
                     }
 
-                    img {
-                        min-width: 50px;
-                        width: 50px;
-                        height: 50px;
-                        border-radius: 50%;
-                        object-fit: cover;
 
-                    }
+
 
                     .userChatInfo {
                         display: flex;
@@ -241,10 +270,13 @@ $darkColor : #2f2d52;
                             margin: -1px;
                         }
 
+                       
                     }
+
 
                 }
             }
+             
 
             ::-webkit-scrollbar {
                 width: 10px;
@@ -279,6 +311,17 @@ $darkColor : #2f2d52;
                 padding: 10px;
                 color: lightgray;
 
+                button {
+                    background-color: transparent;
+                    color: white;
+                    cursor: pointer;
+                }
+
+                button:hover {
+                    background-color: rgb(21, 10, 48);
+                    box-shadow: 0px 0px 3px rgb(197, 186, 235), 0px 0px 3px rgb(197, 186, 235);
+                }
+
                 .chatIcons {
                     display: flex;
                     gap: 10px;
@@ -293,14 +336,15 @@ $darkColor : #2f2d52;
 
             // message --------------
             .messages {
-                
-                
-                
+
+
+
                 background-color: #ddddf7;
                 padding: 10px;
                 height: calc(100% - 160px);
                 overflow: scroll;
-                h3{
+
+                h3 {
                     opacity: 0.7;
                 }
 
@@ -315,12 +359,18 @@ $darkColor : #2f2d52;
                         color: gray;
                         font-size: 12px;
                         font-weight: 300;
+                        width: 40px;
 
                         img {
                             width: 40px;
                             height: 40px;
                             border-radius: 50%;
                             object-fit: cover;
+                        }
+
+                        span {
+                            word-wrap: normal;
+                            text-align: center;
                         }
                     }
 
@@ -358,7 +408,8 @@ $darkColor : #2f2d52;
 
                         }
                     }
-///////////// popUp ----------------------------------popUp
+
+                    ///////////// popUp ----------------------------------popUp
                     .messagePhotoFullScreen {
                         position: absolute;
                         left: 10%;
@@ -367,28 +418,31 @@ $darkColor : #2f2d52;
                         bottom: 0;
                         background: rgba(0, 0, 0, 0.9);
                         height: 80%;
-                        border-radius: 5px;              
-                        object-fit:contain;
+                        border-radius: 5px;
+                        object-fit: contain;
                         align-items: center;
+
                         @include mobile {
                             left: 0;
                             right: 0;
                             top: 10%;
                             bottom: 0;
                         }
+
                         @include tablet {
                             left: 0;
                             right: 0;
                             top: 10%;
                             bottom: 0;
                         }
-                        
-                        img{
+
+                        img {
                             height: 100%;
-                            width: 100%; 
-                            object-fit:contain;
+                            width: 100%;
+                            object-fit: contain;
                         }
-                        button{
+
+                        button {
                             position: absolute;
                             right: 20px;
                             top: 20px;
@@ -398,6 +452,11 @@ $darkColor : #2f2d52;
                             cursor: pointer;
                             height: 25px;
 
+                        }
+
+                        button:hover {
+                            background-color: rgb(21, 10, 48);
+                            box-shadow: 0px 0px 3px rgb(197, 186, 235), 0px 0px 3px rgb(197, 186, 235);
                         }
 
                     }

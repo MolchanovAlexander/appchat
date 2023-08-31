@@ -16,16 +16,16 @@ const Messages = () => {
         }
 
     }, [data.chatId])
-   
+ 
     return (
         <div className="messages" >
 
-            {data.chatId == "null"? (<h3>
-                Choose user for conversation from the lefthand side of the app
+            {data.chatId === "null"? (<h3>
+                Choose user for conversation from the lefthand side of the app, find user by search input to start conversation or delete user
                 </h3>)
             :( messages.map((m) => (<Message
                  message={m} 
-                 key={m.uid} /> )))}
+                 key={m.id} /> )))}
            
         </div>
     )
