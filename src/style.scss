@@ -289,10 +289,16 @@ $darkColor : #2f2d52;
 
             // message --------------
             .messages {
+                
+                
+                
                 background-color: #ddddf7;
                 padding: 10px;
                 height: calc(100% - 160px);
                 overflow: scroll;
+                h3{
+                    opacity: 0.7;
+                }
 
                 .message {
                     display: flex;
@@ -377,6 +383,7 @@ $darkColor : #2f2d52;
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
+                    gap: 10px;
 
                     img {
                         height: 24px;

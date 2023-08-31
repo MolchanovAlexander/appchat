@@ -16,12 +16,17 @@ const Messages = () => {
         }
 
     }, [data.chatId])
-    //console.log(messages);
+   
     return (
-        <div className="messages">
-            {messages.map((m) => (
-                <Message message={m} key={m.uid} />
-            ))}
+        <div className="messages" >
+
+            {data.chatId == "null"? (<h3>
+                Choose user for conversation from the lefthand side of the app
+                </h3>)
+            :( messages.map((m) => (<Message
+                 message={m} 
+                 key={m.uid} /> )))}
+           
         </div>
     )
 }
