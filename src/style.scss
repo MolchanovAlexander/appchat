@@ -178,6 +178,9 @@ $darkColor : #2f2d52;
                 .searchForm {
                     padding: 10px;
                     display: flex;
+                    
+                    justify-content: space-between;
+                    flex-shrink:abs($number: 0);
 
                     .userChatImg {
                         width: 50px;
@@ -192,10 +195,13 @@ $darkColor : #2f2d52;
                         background-color: transparent;
                         color: white;
                         outline: none;
-
+                        min-width: 50px;
                         &::placeholder {
                             color: lightgreen;
                         }
+                    }
+                    button{
+                        margin-right: 5px;
                     }
                 }
                 .userChat {
@@ -418,9 +424,10 @@ $darkColor : #2f2d52;
                         bottom: 0;
                         background: rgba(0, 0, 0, 0.9);
                         height: 80%;
-                        border-radius: 5px;
+                        border-radius: 10px;
                         object-fit: contain;
                         align-items: center;
+                        overflow: hidden;
 
                         @include mobile {
                             left: 0;
@@ -440,6 +447,7 @@ $darkColor : #2f2d52;
                             height: 100%;
                             width: 100%;
                             object-fit: contain;
+                            border-radius: 10px;
                         }
 
                         button {
@@ -471,7 +479,22 @@ $darkColor : #2f2d52;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-
+                .shareImgContainer{
+                    display: flex;
+                    object-fit: cover;
+                    width: auto;
+                    height: 50px;
+                    .shareCancelImg{
+                        cursor: pointer;
+                        border: 1px solid black;
+                        border-radius: 50%;
+                        min-width: 20px;
+                        text-align: center;
+                        max-height: 20px;
+                        padding :3px ;
+                        
+                    }
+                }
                 input {
                     width: 100%;
                     border: none;

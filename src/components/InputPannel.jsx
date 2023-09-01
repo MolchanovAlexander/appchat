@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Img from "../img/img.png";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
@@ -22,6 +22,12 @@ const InputPannel = () => {
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
 
+  useEffect(()=>{
+    if(data.chatId === "null"){
+    setText("")
+  }
+  },[data.chatId])
+  
 
   const handleSend = async () => {
     // works if img fille choosen or text more than 1 "space"
@@ -90,7 +96,7 @@ const InputPannel = () => {
       setText("");
       setImg(null);
       setProgress(0)
-      console.log({ progress });
+     
     }
 
   };
@@ -98,18 +104,23 @@ const InputPannel = () => {
     e.code === "Enter" && handleSend();
 
   };
+  
   return (
     <div className="inputPannel">
+      {img && <div className='shareImgContainer'>
+        <img src={URL.createObjectURL(img)} alt="" className="shareImg" />
+        <div className='shareCancelImg' onClick={() => setImg(null)}> x</div>
+      </div>}
       <input
         type="text"
         placeholder="Type something..."
         onChange={(e) => setText(e.target.value)}
-        value={text}
+        value={data.chatId === "null" ? "" : text}
         onKeyDown={handleKey}
       />
 
       <div className="send">
-        
+
         <input
           type="file"
           id="file"

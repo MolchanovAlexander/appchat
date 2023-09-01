@@ -25,7 +25,7 @@ const Login = (props) => {
 
     return <div className="formContainer">
         <div className="formWrapper">
-            <span className="logo">GufRIP Chat</span>
+            <span className="logo">BugChat</span>
             <span className="title">Login</span>
             <form onSubmit={ handleSubmit }>
 
