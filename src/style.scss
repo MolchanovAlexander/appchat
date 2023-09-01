@@ -181,7 +181,7 @@ $darkColor : #2f2d52;
                     
                     justify-content: space-between;
                     flex-shrink:abs($number: 0);
-
+                    
                     .userChatImg {
                         width: 50px;
                     }
@@ -205,12 +205,23 @@ $darkColor : #2f2d52;
                     }
                 }
                 .userChat {
+                    div:nth-child(1){
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                    }
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
+                    span{
+                        color: white;
+                        
+                    }
                     .userChatInfoDelete {
                         background-color: transparent;
                         cursor: pointer;
+                        color: white;
                     }
                     .userChatInfoDelete:hover {
                         background-color: #2f2d52;

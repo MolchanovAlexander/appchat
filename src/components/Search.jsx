@@ -26,24 +26,24 @@ const Search = () => {
 
   const handleSearch = async () => {
     const q = query(
-      collection(db, "users"),where("displayName", "==",username)
+      collection(db, "users"), where("displayName", "==", username)
       //where("all", "!=",0)
-      
+
     );
-    
+
 
     try {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         setUser(doc.data());
-        
+
       });
     } catch (err) {
       setErr(true);
     }
-    
+
   };
-  
+
   const handleKey = (e) => {
     e.code === "Enter" && handleSearch();
 
@@ -58,7 +58,7 @@ const Search = () => {
       currentUser.uid > user.uid
         ? currentUser.uid + user.uid
         : user.uid + currentUser.uid;
-   
+
     try {
       const res = await getDoc(doc(db, "chats", combinedId));
 
@@ -96,7 +96,7 @@ const Search = () => {
       currentUser.uid > user.uid
         ? currentUser.uid + user.uid
         : user.uid + currentUser.uid;
-    
+
     try {
 
       //delete a chat in chats collection Ugovi4
@@ -135,11 +135,9 @@ const Search = () => {
       {err && <span>User not found!</span>}
       {user && (
         <div className="userChat" >
-          <div>
-            <img className="userChatImg" onClick={handleSelect} src={user.photoURL} alt="" />
-            <div className="userChatInfo">
-              <span>{user.displayName}</span>
-
+          <div onClick={handleSelect}>
+            <img className="userChatImg" src={user.photoURL} alt="" />
+            <div className="userChatInfo"><span>{user.displayName}</span>
             </div>
           </div>
           <div>
