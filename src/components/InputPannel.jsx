@@ -23,8 +23,9 @@ const InputPannel = () => {
   const { data } = useContext(ChatContext);
 
   useEffect(()=>{
-    if(data.chatId === "null"){
+    if(data.chatId){
     setText("")
+    setImg(null)
   }
   },[data.chatId])
   
